@@ -29,10 +29,24 @@ def softmax_loss_naive(W, X, y, reg):
   # here, it is easy to run into numeric instability. Don't forget the        #
   # regularization!                                                           #
   #############################################################################
-  pass
+  num_train, dim = X.shape
+  num_class = W.shape[1]
+  
+  for i in xrange(num_train):
+    p = X[i].dot(W)
+    p -= p.max() # for numerical stabilityn
+    p = np.exp(p)/np.exp(p).sum()
+    loss += -np.log(p[y[i]])
+    p[y[i]] -= 1 # adjust the gradient for the case of matching label
+    dW += X[i].reshape(-1,1).dot(p.reshape(1,-1))
+
   #############################################################################
   #                          END OF YOUR CODE                                 #
   #############################################################################
+  loss /= num_train
+  loss += 0.5*reg* (W**2).sum()
+  dW /= num_train
+  dW += reg * W
 
   return loss, dW
 
@@ -53,7 +67,20 @@ def softmax_loss_vectorized(W, X, y, reg):
   # here, it is easy to run into numeric instability. Don't forget the        #
   # regularization!                                                           #
   #############################################################################
-  pass
+  num_train, dim = X.shape
+  num_class = W.shape[1]
+  scores = X.dot(W)
+  scores -= scores.max(axis=1).reshape(-1,1)
+  p = np.exp(scores)/np.exp(scores).sum(axis=1).reshape(-1,1)
+  mask = xrange(num_train), y
+  loss += (-np.log(p[mask])).sum()
+  loss /= num_train
+  loss += 0.5*reg*(W**2).sum()
+
+  p[mask] -=1
+  dW += X.T.dot(p)
+  dW /= num_train
+  dW += reg*W
   #############################################################################
   #                          END OF YOUR CODE                                 #
   #############################################################################
