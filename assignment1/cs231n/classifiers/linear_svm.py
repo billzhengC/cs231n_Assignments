@@ -45,7 +45,7 @@ def svm_loss_naive(W, X, y, reg):
   dW /= num_train
   # Add regularization to the loss.
   loss += 0.5 * reg * np.sum(W * W)
-  dW += reg*np.abs(W)
+  dW += reg*W
   #############################################################################
   # TODO:                                                                     #
   # Compute the gradient of the loss function and store it dW.                #

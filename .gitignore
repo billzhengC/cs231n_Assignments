@@ -2,6 +2,7 @@
 14slides/
 cvpr2015AuthorKit/
 assignment2/
+*.html
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -64,4 +65,4 @@ docs/_build/
 target/
 
 #Ipython Notebook
-.ipynb_checkpoints
+.ipynb_checkpoints/
