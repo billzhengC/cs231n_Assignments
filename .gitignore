@@ -1,7 +1,6 @@
 *.pdf
 14slides/
 cvpr2015AuthorKit/
-assignment2/
 *.html
 
 # Byte-compiled / optimized / DLL files
